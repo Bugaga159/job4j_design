@@ -2,6 +2,8 @@ package ru.job4j.collection;
 
 import java.util.*;
 
+import static java.lang.StrictMath.round;
+
 public class SimpleArray<T> implements Iterable<T> {
 	private Object[] container;
 	private int size = 1;
@@ -20,7 +22,7 @@ public class SimpleArray<T> implements Iterable<T> {
 	public void add(T model) {
 		modCount++;
 		if (index >= size) {
-			size++;
+			size = (int) round(size * 1.5);
 			container = Arrays.copyOf(container, size);
 		}
 		container[index++] = model;
