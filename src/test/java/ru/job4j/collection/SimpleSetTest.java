@@ -22,4 +22,17 @@ public class SimpleSetTest {
 		assertThat(iterator.hasNext(), is(false));
 	}
 
+	@Test
+	public void whenAddInSetNull() {
+		SimpleSet<String> list = new SimpleSet<>();
+		list.add("first");
+		list.add(null);
+		list.add("third");
+		Iterator<String> iterator = list.iterator();
+		assertThat(iterator.next(), is("first"));
+		assertThat(iterator.next() == null, is(true));
+		assertThat(iterator.next(), is("third"));
+		assertThat(iterator.hasNext(), is(false));
+	}
+
 }
