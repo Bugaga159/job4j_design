@@ -66,7 +66,7 @@ public class SimpleHashMapTest {
 	public void whenCorruptedItAddNewNode() {
 		SimpleHashMap<Integer, String> map = new SimpleHashMap<>();
 		map.insert(1, "Igor");
-		Iterator<String> iterator = map.iterator();
+		Iterator<SimpleHashMap.Node> iterator = map.iterator();
 		map.insert(2, "Sasha");
 		iterator.next();
 	}
@@ -76,7 +76,7 @@ public class SimpleHashMapTest {
 		SimpleHashMap<Integer, String> map = new SimpleHashMap<>();
 		map.insert(1, "Igor");
 		map.insert(2, "Masha");
-		Iterator<String> iterator = map.iterator();
+		Iterator<SimpleHashMap.Node> iterator = map.iterator();
 		map.delete(2);
 		iterator.next();
 	}
@@ -85,23 +85,23 @@ public class SimpleHashMapTest {
 	public void shouldGetIterator() {
 		SimpleHashMap<Integer, String> map = new SimpleHashMap<>();
 		map.insert(1, "Igor");
-		map.insert(2, "Masha");
-		Iterator<String> iterator = map.iterator();
+		map.insert(3, "Masha");
+		Iterator<SimpleHashMap.Node> iterator = map.iterator();
 		assertThat(iterator.hasNext(), is(true));
-		assertThat(iterator.next(), is("Igor"));
+		assertThat(iterator.next().getValue(), is("Igor"));
 		assertThat(iterator.hasNext(), is(true));
-		assertThat(iterator.next(), is("Masha"));
+		assertThat(iterator.next().getValue(), is("Masha"));
 		assertThat(iterator.hasNext(), is(false));
 	}
 
 	@Test
-	public void shouldBeSize36() {
+	public void shouldBeSize32() {
 		SimpleHashMap<Integer, String> map = new SimpleHashMap<>();
 		for (int i = 0; i < 17; i++) {
 			map.insert(i, "Test-" + i);
 		}
 		map.insert(17, "Igor");
-		assertThat(map.getSizeTable(), is(24));
+		assertThat(map.getSizeTable(), is(32));
 	}
 
 	@Test

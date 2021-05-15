@@ -7,7 +7,7 @@ import java.util.Objects;
 
 import static java.lang.StrictMath.round;
 
-public class SimpleHashMap<K, V> implements Iterable {
+public class SimpleHashMap<K, V> implements Iterable<SimpleHashMap.Node> {
 
 	class Node<K, V> {
 		private K key;
@@ -41,14 +41,14 @@ public class SimpleHashMap<K, V> implements Iterable {
 
 		@Override
 		public int hashCode() {
-			return Objects.hash( key, value);
+			return Objects.hash(key, value);
 		}
 	}
 
 	private final static int DEFAULT_CAPACITY = 16;
 	private Node<K, V>[] table = new Node[DEFAULT_CAPACITY];
 	private int size;
-	private final double loadFactor = 0.5;
+	private final double loadFactor = 0.75;
 	private double threshold = table.length * loadFactor;
 	private int modCount = 0;
 
@@ -59,15 +59,12 @@ public class SimpleHashMap<K, V> implements Iterable {
 		Node<K, V> node = table[index];
 		if (node != null && Objects.equals(node.key, key)) {
 			node.value = value;
-			if (++size > threshold) {
-				resize((int) round(1.5 * table.length));
-			}
 			return true;
 		}
 		if (table[index] == null) {
 			table[index] = new Node(key, value);
 			if (++size > threshold) {
-				resize((int) round(1.5 * table.length));
+				resize(2 * table.length);
 			}
 		} else {
 			result = false;
@@ -130,7 +127,7 @@ public class SimpleHashMap<K, V> implements Iterable {
 	}
 
 	@Override
-	public Iterator<V> iterator() {
+	public Iterator<SimpleHashMap.Node> iterator() {
 		return new Iterator<>() {
 			int expectedModCount = modCount;
 			private int point = 0;
@@ -144,17 +141,14 @@ public class SimpleHashMap<K, V> implements Iterable {
 			}
 
 			@Override
-			public V next() {
+			public Node next() {
 				if (expectedModCount != modCount) {
 					throw new ConcurrentModificationException();
 				}
 				if (!hasNext()) {
 					throw new NoSuchElementException();
 				}
-				Node<K, V> node = (Node) table[point];
-				V elem = node.getValue();
-				point++;
-				return elem;
+				return table[point++];
 			}
 		};
 	}
