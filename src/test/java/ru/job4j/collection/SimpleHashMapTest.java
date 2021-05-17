@@ -66,7 +66,7 @@ public class SimpleHashMapTest {
 	public void whenCorruptedItAddNewNode() {
 		SimpleHashMap<Integer, String> map = new SimpleHashMap<>();
 		map.insert(1, "Igor");
-		Iterator<SimpleHashMap.Node> iterator = map.iterator();
+		Iterator<SimpleHashMap<Integer, String>.Node<Integer, String>> iterator = map.iterator();
 		map.insert(2, "Sasha");
 		iterator.next();
 	}
@@ -76,7 +76,7 @@ public class SimpleHashMapTest {
 		SimpleHashMap<Integer, String> map = new SimpleHashMap<>();
 		map.insert(1, "Igor");
 		map.insert(2, "Masha");
-		Iterator<SimpleHashMap.Node> iterator = map.iterator();
+		Iterator<SimpleHashMap<Integer, String>.Node<Integer, String>> iterator = map.iterator();
 		map.delete(2);
 		iterator.next();
 	}
@@ -86,7 +86,7 @@ public class SimpleHashMapTest {
 		SimpleHashMap<Integer, String> map = new SimpleHashMap<>();
 		map.insert(1, "Igor");
 		map.insert(3, "Masha");
-		Iterator<SimpleHashMap.Node> iterator = map.iterator();
+		Iterator<SimpleHashMap<Integer, String>.Node<Integer, String>> iterator = map.iterator();
 		assertThat(iterator.hasNext(), is(true));
 		assertThat(iterator.next().getValue(), is("Igor"));
 		assertThat(iterator.hasNext(), is(true));

@@ -5,9 +5,7 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 
-import static java.lang.StrictMath.round;
-
-public class SimpleHashMap<K, V> implements Iterable<SimpleHashMap.Node> {
+public class SimpleHashMap<K, V> implements Iterable<SimpleHashMap<K, V>.Node<K, V>> {
 
 	class Node<K, V> {
 		private K key;
@@ -127,7 +125,7 @@ public class SimpleHashMap<K, V> implements Iterable<SimpleHashMap.Node> {
 	}
 
 	@Override
-	public Iterator<SimpleHashMap.Node> iterator() {
+	public Iterator<SimpleHashMap<K, V>.Node<K, V>> iterator() {
 		return new Iterator<>() {
 			int expectedModCount = modCount;
 			private int point = 0;
@@ -141,7 +139,7 @@ public class SimpleHashMap<K, V> implements Iterable<SimpleHashMap.Node> {
 			}
 
 			@Override
-			public Node next() {
+			public Node<K, V> next() {
 				if (expectedModCount != modCount) {
 					throw new ConcurrentModificationException();
 				}
