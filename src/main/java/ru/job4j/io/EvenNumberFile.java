@@ -5,11 +5,8 @@ import java.io.IOException;
 
 public class EvenNumberFile {
 	public static void main(String[] args) {
-		FileInputStream in = null;
-		StringBuilder text = null;
-		try {
-			in = new FileInputStream("even.txt");
-			text = new StringBuilder();
+		try (FileInputStream in = new FileInputStream("even.txt")) {
+			StringBuilder text = new StringBuilder();
 			int read;
 			while ((read = in.read()) != -1) {
 				text.append((char) read);
