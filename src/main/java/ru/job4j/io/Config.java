@@ -2,6 +2,7 @@ package ru.job4j.io;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.StringJoiner;
@@ -20,9 +21,12 @@ public class Config {
 					.filter(e -> !e.contains("#") && e.contains("="))
 					.forEach(e -> {
 						String[] line = e.split("=");
+						if (line.length < 2) {
+							throw new IllegalArgumentException();
+						}
 						values.put(line[0], line[1]);
 					});
-		} catch (Exception e) {
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}

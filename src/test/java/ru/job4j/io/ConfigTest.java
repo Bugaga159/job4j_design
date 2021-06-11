@@ -14,4 +14,11 @@ public class ConfigTest {
 		assertThat(config.value("name"), is("Petr Arsentev"));
 		assertNull(config.value("test"));
 	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void excIllegalArgumentExceptionTest() {
+		String path = "./data/error.properties";
+		Config config = new Config(path);
+		config.load();
+	}
 }
