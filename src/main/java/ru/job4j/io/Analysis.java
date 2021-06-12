@@ -13,10 +13,10 @@ public class Analysis {
 			while ((line = in.readLine()) != null) {
 				String[] lines = line.split(" ");
 				if (sb.length() == 0 && (lines[0].equals("400") || lines[0].equals("500"))) {
-					sb.append(lines[1]).append(" / ");
+					sb.append(lines[1]).append(";");
 				}
 				if (sb.length() > 0 && (lines[0].equals("200") || lines[0].equals("300"))) {
-					sb.append(lines[1]).append("; ");
+					sb.append(lines[1]).append(";");
 					out.println(sb);
 					sb = new StringBuilder();
 				}
