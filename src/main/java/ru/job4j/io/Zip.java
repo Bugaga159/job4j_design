@@ -8,8 +8,16 @@ import java.util.zip.ZipOutputStream;
 
 public class Zip {
 	public void packFiles(List<Path> sources, Path target) {
-		for (Path file : sources) {
-			packSingleFile(file, target);
+		try (ZipOutputStream zip = new ZipOutputStream(new BufferedOutputStream(
+				new FileOutputStream(target.toString())))) {
+			for (Path source : sources) {
+				zip.putNextEntry(new ZipEntry(source.toFile().getPath()));
+				try (BufferedInputStream out = new BufferedInputStream(new FileInputStream(source.toString()))) {
+					zip.write(out.readAllBytes());
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 
