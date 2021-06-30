@@ -22,7 +22,8 @@ public class EchoServer {
 						if (str.contains("msg=Hello")) {
 							answer = "Hello";
 						} else if (str.contains("msg=Exit")) {
-							answer = "Завершить работу сервера.";
+							out.write("HTTP/1.1 200 OK\r\n\r\n".getBytes());
+							out.write("Завершить работу сервера.\r\n".getBytes());
 							server.close();
 						} else if (str.contains("msg=")) {
 							String[] msg = str.split("=");
