@@ -1,0 +1,15 @@
+<?xml version="1.1" encoding="UTF-8" ?>
+<car name="Angry" color="green">
+    <frontWheelDrive>true</frontWheelDrive>
+    <numberCar>69</numberCar>
+    <engine>
+        <numberOfCylinders>4</numberOfCylinders>
+        <volume>2.6</volume>
+        <power>250</power>
+    </engine>
+    <crew>
+        <person>Mike</person>
+        <person>Igor</person>
+        <person>Mary</person>
+    </crew>
+</car>
