@@ -1,17 +1,29 @@
 package ru.job4j.serialization.xml;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.Marshaller;
+import javax.xml.bind.Unmarshaller;
+import javax.xml.bind.annotation.*;
+import java.io.StringReader;
+import java.io.StringWriter;
 import java.util.Arrays;
 
+@XmlRootElement(name = "carTeam")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Car {
+	@XmlAttribute
 	private String name;
+	@XmlAttribute
 	private String color;
 	private Engine engine;
 	private boolean frontWheelDrive;
 	private int numberCar;
+	@XmlElementWrapper()
+	@XmlElement(name = "person")
 	private String[] crew;
+
+	public Car() {
+	}
 
 	public Car(String name, String color, Engine engine,
 			   boolean frontWheelDrive, int numberCar, String[] crew) {
@@ -21,30 +33,6 @@ public class Car {
 		this.frontWheelDrive = frontWheelDrive;
 		this.numberCar = numberCar;
 		this.crew = crew;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public String getColor() {
-		return color;
-	}
-
-	public Engine getEngine() {
-		return engine;
-	}
-
-	public boolean isFrontWheelDrive() {
-		return frontWheelDrive;
-	}
-
-	public int getNumberCar() {
-		return numberCar;
-	}
-
-	public String[] getCrew() {
-		return crew;
 	}
 
 	@Override
@@ -59,7 +47,7 @@ public class Car {
 				+ '}';
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		final Car carTeam = new Car(
 				"Happy",
 				"black",
@@ -68,5 +56,26 @@ public class Car {
 				36,
 				new String[]{"Mike", "Igor", "Mary"}
 		);
+
+		// Получаем контекст для доступа к АПИ
+		JAXBContext context = JAXBContext.newInstance(Car.class);
+		// Создаем сериализатор
+		Marshaller marshaller = context.createMarshaller();
+		// Указываем, что нам нужно форматирование
+		marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+		String xml = "";
+		try (StringWriter writer = new StringWriter()) {
+			// Сериализуем
+			marshaller.marshal(carTeam, writer);
+			xml = writer.getBuffer().toString();
+			System.out.println(xml);
+		}
+		// Для десериализации нам нужно создать десериализатор
+		Unmarshaller unmarshaller = context.createUnmarshaller();
+		try (StringReader reader = new StringReader(xml)) {
+			// десериализуем
+			Car carTeam2 = (Car) unmarshaller.unmarshal(reader);
+			System.out.println(carTeam2);
+		}
 	}
 }

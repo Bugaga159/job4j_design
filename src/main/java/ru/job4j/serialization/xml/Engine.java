@@ -1,9 +1,18 @@
 package ru.job4j.serialization.xml;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement(name = "contact")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Engine {
 	private int numberOfCylinders;
 	private double volume;
 	private int power;
+
+	public Engine() {
+	}
 
 	public Engine(int numberOfCylinders, double volume, int power) {
 		this.numberOfCylinders = numberOfCylinders;
@@ -18,17 +27,5 @@ public class Engine {
 				+ ", volume=" + volume
 				+ ", power=" + power
 				+ '}';
-	}
-
-	public int getNumberOfCylinders() {
-		return numberOfCylinders;
-	}
-
-	public double getVolume() {
-		return volume;
-	}
-
-	public int getPower() {
-		return power;
 	}
 }
