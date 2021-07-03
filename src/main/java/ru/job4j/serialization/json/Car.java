@@ -2,7 +2,12 @@ package ru.job4j.serialization.json;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class Car {
 	private String name;
@@ -59,25 +64,30 @@ public class Car {
 	}
 
 	public static void main(String[] args) {
-		final Car carTeam = new Car("Happy", "black",
+		JSONObject jsonEngine =
+				new JSONObject("{\"numberOfCylinders\":4,\"volume\":2.0,\"power\":200}");
+
+		List<PersonCar> crew = new ArrayList<>();
+		crew.add(new PersonCar("Mike", "driver", 28));
+		crew.add(new PersonCar("Oleg", "navigator", 23));
+		JSONArray jsonCrew = new JSONArray(crew);
+		final Car carTeam2 = new Car("Happy", "black",
 				new Engine(4, 2.0, 200),
 				true, 36,
 				new PersonCar[]{
 						new PersonCar("Mike", "driver", 28),
 						new PersonCar("Oleg", "navigator", 23)}
 		);
-		final Gson gson = new GsonBuilder().create();
-		System.out.println(gson.toJson(carTeam));
-		final String carTeam2 = "{\"name\":\"Happy\","
-				+ "\"color\":\"black\","
-				+ "\"engine\":{\"numberOfCylinders\":4,\"volume\":2.0,\"power\":200},"
-				+ "\"frontWheelDrive\":true,"
-				+ "\"numberCar\":36,"
-				+ "\"crew\":["
-				+ "{\"name\":\"Mike\",\"position\":\"driver\",\"age\":28},"
-				+ "{\"name\":\"Oleg\",\"position\":\"navigator\",\"age\":23}"
-				+ "]}";
-		final Car carTeam2FromGson = gson.fromJson(carTeam2, Car.class);
-		System.out.println(carTeam2FromGson);
+		JSONObject carTeam = new JSONObject();
+		carTeam.put("name", carTeam2.getName());
+		carTeam.put("color", carTeam2.getColor());
+		carTeam.put("engine", jsonEngine);
+		carTeam.put("frontWheelDrive", carTeam2.isFrontWheelDrive());
+		carTeam.put("numberCar", carTeam2.getNumberCar());
+		carTeam.put("crew", jsonCrew);
+
+		System.out.println(carTeam.toString());
+
+		System.out.println(new JSONObject(carTeam2).toString());
 	}
 }
