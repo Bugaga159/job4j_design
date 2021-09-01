@@ -19,4 +19,4 @@ insert into car(number, seria_id, color, completed) values ('KsnQj3JI', 3, 'gree
 
 select c.number, s.name from car as c join seria as s on c.seria_id = s.id;
 select c.number as Номер, s.name as Серия from car as c join seria as s on c.seria_id = s.id;
-select c.number, s.name, c.color, c.completed from car as c join seria as s on c.seria_id = s.id and c.completed = true;
+select c.number, s.name, c.color, c.completed from car as c join seria as s on c.seria_id = s.id and c.completed = '1';
