@@ -1,7 +1,5 @@
-package ru.job4j.io.searchFiles;
+package ru.job4j.io;
 
-import ru.job4j.io.ArgsName;
-import ru.job4j.io.SearchFiles;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -9,7 +7,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Pattern;
 
-public class Search {
+public class SearchExe {
 	public static void main(String[] args) throws IOException {
 		if (args.length != 4) {
 			throw new IllegalArgumentException("Incorrect parameters. "
@@ -18,10 +16,10 @@ public class Search {
 					+ "-t to choose name, mask or regex,"
 					+ "-o to define file to save search.");
 		}
-		ArgsName param = Search.validateParameters(args);
-		SearchFiles searcher = Search.setPredicate(param.get("t"), param.get("n"));
+		ArgsName param = SearchExe.validateParameters(args);
+		SearchFiles searcher = SearchExe.setPredicate(param.get("t"), param.get("n"));
 		Files.walkFileTree(Path.of(param.get("d")), searcher);
-		Search.writeOut(searcher.getPaths(), new File(param.get("o")));
+		SearchExe.writeOut(searcher.getPaths(), new File(param.get("o")));
 	}
 
 	private static ArgsName validateParameters(String[] args) {
