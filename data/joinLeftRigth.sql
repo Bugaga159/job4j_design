@@ -46,4 +46,8 @@ insert into teens(name, gender) values
 	('Alex', 'w'),
 	('Kolja', 'orc');
 -- Используя cross join составить все возможные разнополые пары
-select t1.name, t2.gender from teens t1 cross join teens t2;
+select
+    t1.name, t1.gender,
+    t2.name, t2.gender
+from teens t1 cross join teens t2
+where t1.gender!=t2.gender;
